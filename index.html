@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shift Cover Request</title>
 
-  <!-- Google Font (Optional, but looks cool) -->
+  <!-- Google Fonts (for a cool UI) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
     rel="stylesheet"
@@ -17,34 +17,29 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- Page Header -->
+  <!-- Header -->
   <header class="main-header">
     <div class="header-content">
       <h1>Shift Cover Request</h1>
     </div>
   </header>
 
-  <!-- Main Container -->
+  <!-- Main -->
   <main class="container">
-    <!-- Card for the Form -->
     <section class="card">
       <h2>Request a Shift Cover</h2>
       <p>Fill out the form below to request coverage for your shift.</p>
-      
+
       <form id="shiftForm" class="form-layout">
-        <!-- Time selection -->
+        <!-- Time selection (dynamically populated) -->
         <div class="form-group">
           <label for="timeSelect">Time Slot</label>
           <select id="timeSelect" name="timeSelect" required>
-            <option value="" disabled selected>-- Select Time Slot --</option>
-            <option value="Morning (8am - 12pm)">Morning (8am - 12pm)</option>
-            <option value="Afternoon (12pm - 4pm)">Afternoon (12pm - 4pm)</option>
-            <option value="Evening (4pm - 8pm)">Evening (4pm - 8pm)</option>
-            <option value="Night (8pm - 12am)">Night (8pm - 12am)</option>
+            <!-- Options will be inserted by script.js -->
           </select>
         </div>
 
-        <!-- Shift selection -->
+        <!-- Shift selection (still hard-coded in this example) -->
         <div class="form-group">
           <label for="shiftType">Shift Type</label>
           <select id="shiftType" name="shiftType" required>
@@ -71,7 +66,7 @@
           <input type="email" id="userEmail" name="userEmail" placeholder="john@example.com" required />
         </div>
 
-        <!-- Submit Button -->
+        <!-- Submit -->
         <button type="submit" class="btn primary-btn">Submit Request</button>
       </form>
     </section>
@@ -82,7 +77,7 @@
     <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
   </footer>
 
-  <!-- Form submission logic -->
+  <!-- Script for user form & dynamic times -->
   <script src="scripts/script.js"></script>
 </body>
 </html>

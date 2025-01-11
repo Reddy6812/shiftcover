@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Shifts (Admin)</title>
 
-  <!-- Google Font -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
     rel="stylesheet"
   />
 
-  <!-- Link to our shared stylesheet -->
+  <!-- Link to CSS -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -25,16 +25,39 @@
   </header>
 
   <main class="container">
-    <!-- Availability -->
+    <!-- 1. Manage Time Slots (NEW) -->
+    <section class="card">
+      <h2>Time Slots Manager</h2>
+      <p>Add or remove time slots that will appear for users on the request form.</p>
+
+      <form id="timeSlotForm" class="form-layout">
+        <div class="form-group">
+          <label for="newTimeSlot">Add a New Time Slot</label>
+          <input
+            type="text"
+            id="newTimeSlot"
+            placeholder="E.g. Late Night (10pm - 2am)"
+            required
+          />
+        </div>
+        <button type="submit" class="btn primary-btn">Add Time Slot</button>
+      </form>
+
+      <ul id="timeSlotList">
+        <!-- Populated by admin.js with current time slots from localStorage -->
+      </ul>
+    </section>
+
+    <!-- 2. My Available Times (just an example) -->
     <section class="card">
       <h2>My Available Times</h2>
       <ul id="myAvailability"><!-- Populated by admin.js --></ul>
     </section>
 
-    <!-- Submitted Requests -->
+    <!-- 3. All Submitted Requests -->
     <section class="card">
       <h2>All Submitted Requests</h2>
-      <p>Review the requests from staff who need coverage.</p>
+      <p>Below is a table of all shift requests submitted.</p>
       <div class="table-wrapper">
         <table id="requestsTable">
           <thead>
@@ -47,7 +70,7 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Filled by admin.js -->
+            <!-- Will be populated by admin.js -->
           </tbody>
         </table>
       </div>
@@ -55,11 +78,12 @@
     </section>
   </main>
 
+  <!-- Footer -->
   <footer class="main-footer">
     <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
   </footer>
 
-  <!-- Admin script to display requests -->
+  <!-- Admin script for availability, time slots, and requests -->
   <script src="scripts/admin.js"></script>
 </body>
 </html>

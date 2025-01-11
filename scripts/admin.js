@@ -1,34 +1,85 @@
 // scripts/admin.js
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Elements
     const requestsTableBody = document.querySelector("#requestsTable tbody");
     const clearDataBtn = document.getElementById("clearDataBtn");
     const myAvailabilityList = document.getElementById("myAvailability");
   
-    // Example availability schedule – customize as needed
+    // 1. MY AVAILABILITY (Example)
     const myAvailability = [
       "Mondays: 8am - 3pm",
       "Wednesdays: 1pm - 6pm",
       "Fridays: All day",
       "Sundays: 9am - 2pm"
     ];
-  
-    // Populate the "My Available Times" section
     myAvailability.forEach((slot) => {
       const li = document.createElement("li");
       li.textContent = slot;
       myAvailabilityList.appendChild(li);
     });
   
-    // Retrieve stored shift requests
-    let existingRequests = localStorage.getItem("shiftRequests");
-    if (!existingRequests) {
-      existingRequests = [];
-    } else {
-      existingRequests = JSON.parse(existingRequests);
+    // 2. TIME SLOTS MANAGER
+    const timeSlotForm = document.getElementById("timeSlotForm");
+    const newTimeSlotInput = document.getElementById("newTimeSlot");
+    const timeSlotList = document.getElementById("timeSlotList");
+  
+    // Load existing or default time slots
+    let storedTimeSlots = localStorage.getItem("timeSlots");
+    let timeSlots = storedTimeSlots
+      ? JSON.parse(storedTimeSlots)
+      : [
+          "Morning (8am - 12pm)",
+          "Afternoon (12pm - 4pm)",
+          "Evening (4pm - 8pm)",
+          "Night (8pm - 12am)"
+        ];
+  
+    // Render time slots in #timeSlotList
+    function renderTimeSlots() {
+      timeSlotList.innerHTML = ""; // clear old list
+      timeSlots.forEach((slot, index) => {
+        const li = document.createElement("li");
+        li.textContent = slot;
+  
+        // Delete button
+        const delBtn = document.createElement("button");
+        delBtn.className = "btn danger-btn btn-small";
+        delBtn.style.marginLeft = "10px";
+        delBtn.textContent = "Delete";
+        delBtn.addEventListener("click", () => {
+          // Remove from array
+          timeSlots.splice(index, 1);
+          // Save to localStorage
+          localStorage.setItem("timeSlots", JSON.stringify(timeSlots));
+          // Re-render
+          renderTimeSlots();
+        });
+  
+        li.appendChild(delBtn);
+        timeSlotList.appendChild(li);
+      });
     }
   
-    // Populate the table
+    // Initial render
+    renderTimeSlots();
+  
+    // Handle "Add Time Slot"
+    timeSlotForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const newSlot = newTimeSlotInput.value.trim();
+      if (newSlot) {
+        timeSlots.push(newSlot);
+        localStorage.setItem("timeSlots", JSON.stringify(timeSlots));
+        newTimeSlotInput.value = "";
+        renderTimeSlots();
+      }
+    });
+  
+    // 3. DISPLAY ALL SUBMITTED REQUESTS
+    let existingRequests = localStorage.getItem("shiftRequests");
+    existingRequests = existingRequests ? JSON.parse(existingRequests) : [];
+  
     existingRequests.forEach((request, index) => {
       const row = requestsTableBody.insertRow();
   
@@ -53,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cellEmail.innerText = request.userEmail;
     });
   
-    // Clear button to remove all requests from localStorage
+    // 4. CLEAR ALL REQUESTS
     clearDataBtn.addEventListener("click", () => {
       const confirmClear = confirm("Are you sure you want to clear ALL saved requests?");
       if (confirmClear) {
