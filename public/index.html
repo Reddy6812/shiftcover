@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Shift Cover Request</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
-  <!-- Google Font -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link
@@ -13,48 +13,45 @@
     rel="stylesheet"
   />
 
-  <!-- Link to CSS -->
-  <link rel="stylesheet" href="css/style.css" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Header -->
   <header class="main-header">
     <div class="header-content">
       <h1>Shift Cover Request</h1>
     </div>
   </header>
 
-  <!-- Main Container -->
   <main class="index-main">
-    <!-- Left: The form to submit new requests -->
+    <!-- Left: Form -->
     <section class="card form-section">
       <h2>Request a Shift Cover</h2>
       <p>Fill out the form below to request coverage for your shift.</p>
 
       <form id="shiftForm" class="form-layout">
-        <!-- Date input -->
+        <!-- Date -->
         <div class="form-group">
           <label for="shiftDate">Date of Shift</label>
           <input
             type="date"
             id="shiftDate"
-            name="shiftDate"
             required
           />
         </div>
 
-        <!-- Time-slot selection (populated from admin) -->
+        <!-- Time Slot (populated from server) -->
         <div class="form-group">
-          <label for="timeSelect">Day/Time Range</label>
-          <select id="timeSelect" name="timeSelect" required>
-            <!-- Populated by script.js from localStorage -->
+          <label for="timeSlotSelect">Day/Time Range</label>
+          <select id="timeSlotSelect" required>
+            <!-- Dynamically loaded by script.js -->
           </select>
         </div>
 
-        <!-- Shift type (example) -->
+        <!-- Shift Type -->
         <div class="form-group">
           <label for="shiftType">Shift Type</label>
-          <select id="shiftType" name="shiftType" required>
+          <select id="shiftType" required>
             <option value="" disabled selected>-- Select Shift Type --</option>
             <option value="Event Staff – Set">Event Staff – Set</option>
             <option value="Event Staff – Strike">Event Staff – Strike</option>
@@ -72,7 +69,6 @@
           <input
             type="text"
             id="userName"
-            name="userName"
             placeholder="John Doe"
             required
           />
@@ -84,33 +80,29 @@
           <input
             type="email"
             id="userEmail"
-            name="userEmail"
             placeholder="john@example.com"
             required
           />
         </div>
 
-        <!-- Submit button -->
         <button type="submit" class="btn primary-btn">Submit Request</button>
       </form>
     </section>
 
-    <!-- Right: My Available Timings (read-only) -->
-    <aside class="card sidebar" id="myAvailableTimings">
+    <!-- Right: "My Available Timings" -->
+    <aside class="card sidebar">
       <h2>My Available Timings</h2>
       <p>Recently submitted requests:</p>
       <ul id="requestList">
-        <!-- Populated by script.js from localStorage -->
+        <!-- Populated by script.js -->
       </ul>
     </aside>
   </main>
 
-  <!-- Footer -->
   <footer class="main-footer">
     <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
   </footer>
 
-  <!-- Index logic script -->
   <script src="scripts/script.js"></script>
 </body>
 </html>

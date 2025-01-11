@@ -1,0 +1,114 @@
+// public/scripts/admin.js
+
+// Simple approach: store the admin password in a variable
+// In production, you'd handle real auth, tokens, sessions, etc.
+const ADMIN_PASSWORD = "secret123";
+
+document.addEventListener("DOMContentLoaded", () => {
+  // 1) Time Slots Manager
+  const timeSlotForm = document.getElementById("timeSlotForm");
+  const newSlotInput = document.getElementById("newSlotInput");
+  const timeSlotList = document.getElementById("timeSlotList");
+
+  function loadTimeSlots() {
+    fetch('/api/timeslots')
+      .then(res => res.json())
+      .then(slots => {
+        timeSlotList.innerHTML = "";
+        slots.forEach(slot => {
+          const li = document.createElement("li");
+          li.textContent = slot.text;
+
+          const delBtn = document.createElement("button");
+          delBtn.textContent = "Delete";
+          delBtn.className = "btn danger-btn btn-small";
+          delBtn.style.marginLeft = "10px";
+          delBtn.addEventListener("click", () => {
+            deleteTimeSlot(slot.id);
+          });
+
+          li.appendChild(delBtn);
+          timeSlotList.appendChild(li);
+        });
+      })
+      .catch(err => console.error("Error loading timeslots:", err));
+  }
+
+  function addTimeSlot(slotText) {
+    fetch(`/api/timeslots?adminPassword=${ADMIN_PASSWORD}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slotText })
+    })
+    .then(res => res.json())
+    .then(data => {
+      loadTimeSlots();
+    })
+    .catch(err => console.error("Error adding time slot:", err));
+  }
+
+  function deleteTimeSlot(slotId) {
+    fetch(`/api/timeslots/${slotId}?adminPassword=${ADMIN_PASSWORD}`, {
+      method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(data => {
+      loadTimeSlots();
+    })
+    .catch(err => console.error("Error deleting time slot:", err));
+  }
+
+  // Add new time slot on form submit
+  timeSlotForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const slotText = newSlotInput.value.trim();
+    if (slotText) {
+      addTimeSlot(slotText);
+      newSlotInput.value = "";
+    }
+  });
+
+  // 2) Shift Requests
+  const requestListAdmin = document.getElementById("requestListAdmin");
+
+  function loadRequests() {
+    fetch('/api/requests')
+      .then(res => res.json())
+      .then(requests => {
+        requestListAdmin.innerHTML = "";
+        requests.forEach(r => {
+          const li = document.createElement("li");
+          // Format: "2025-12-01 - Monday (3pm - 8pm) [Event Staff – Early] by John"
+          li.textContent = `${r.shiftDate} - ${r.timeSlot} [${r.shiftType}] by ${r.userName}`;
+
+          // Delete button
+          const delBtn = document.createElement("button");
+          delBtn.textContent = "Delete";
+          delBtn.className = "btn danger-btn btn-small";
+          delBtn.style.marginLeft = "10px";
+          delBtn.addEventListener("click", () => {
+            deleteRequest(r.id);
+          });
+
+          li.appendChild(delBtn);
+          requestListAdmin.appendChild(li);
+        });
+      })
+      .catch(err => console.error("Error loading requests:", err));
+  }
+
+  function deleteRequest(reqId) {
+    fetch(`/api/requests/${reqId}?adminPassword=${ADMIN_PASSWORD}`, {
+      method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(data => {
+      loadRequests();
+    })
+    .catch(err => console.error("Error deleting request:", err));
+  }
+
+  // Initial loads
+  loadTimeSlots();
+  loadRequests();
+});

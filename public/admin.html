@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>My Shifts (Admin)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
   <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
@@ -14,10 +14,9 @@
   />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Header -->
   <header class="main-header">
     <div class="header-content">
       <h1>My Shifts (Admin View)</h1>
@@ -25,18 +24,20 @@
   </header>
 
   <main class="container">
-    <!-- (1) Time Slots Manager -->
+    <!-- Time Slots Manager -->
     <section class="card">
       <h2>Time Slots Manager</h2>
-      <p>Add or remove day/time ranges (e.g. "Monday (8am - 2pm)") that will appear in the user form.</p>
+      <p>Add or remove day/time ranges (e.g. "Monday (3pm - 8pm)").<br>
+        Only the admin can do this, so you must have the correct password in the code or as a param.
+      </p>
 
       <form id="timeSlotForm" class="form-layout">
         <div class="form-group">
-          <label for="newTimeSlot">Enter Day/Time Range</label>
+          <label for="newSlotInput">Day/Time Range</label>
           <input
             type="text"
-            id="newTimeSlot"
-            placeholder="Monday (8am - 2pm)"
+            id="newSlotInput"
+            placeholder="Monday (3pm - 8pm)"
             required
           />
         </div>
@@ -44,16 +45,16 @@
       </form>
 
       <ul id="timeSlotList">
-        <!-- Populated by admin.js from localStorage -->
+        <!-- Populated by admin.js -->
       </ul>
     </section>
 
-    <!-- (2) My Available Timings: All Submitted Requests -->
+    <!-- All Shift Requests -->
     <section class="card">
-      <h2>My Available Timings</h2>
-      <p>All shift cover requests submitted by staff:</p>
-      <ul id="requestsListAdmin">
-        <!-- Populated by admin.js with a delete button for each -->
+      <h2>All Shift Requests</h2>
+      <p>Delete any requests you want to remove.</p>
+      <ul id="requestListAdmin">
+        <!-- Populated by admin.js -->
       </ul>
     </section>
   </main>
@@ -62,7 +63,6 @@
     <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
   </footer>
 
-  <!-- Admin script -->
   <script src="scripts/admin.js"></script>
 </body>
 </html>

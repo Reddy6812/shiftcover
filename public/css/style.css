@@ -1,10 +1,7 @@
-/* css/style.css */
+/* public/css/style.css */
 
-/* 1) Global Reset & Fonts */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0; padding: 0; box-sizing: border-box;
   }
   html, body {
     font-family: 'Montserrat', sans-serif;
@@ -13,7 +10,6 @@
     height: 100%;
   }
   
-  /* 2) Header & Footer */
   .main-header {
     background: #1f2937;
     padding: 1.2rem;
@@ -32,7 +28,6 @@
     margin-top: 2rem;
   }
   
-  /* 3) Cards & Containers */
   .container {
     max-width: 800px;
     width: 90%;
@@ -54,7 +49,6 @@
     color: #555;
   }
   
-  /* 4) Index Main Layout (two columns) */
   .index-main {
     display: flex;
     flex-direction: row;
@@ -69,7 +63,6 @@
     max-width: 300px;
   }
   
-  /* 5) Form Styles */
   .form-layout {
     display: grid;
     gap: 1rem;
@@ -96,7 +89,6 @@
     box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
   }
   
-  /* 6) Buttons */
   .btn {
     display: inline-block;
     padding: 0.75rem 1.2rem;
@@ -127,40 +119,11 @@
     transform: scale(1.02);
   }
   
-  /* 7) Lists */
   ul {
     list-style: disc inside;
     margin-top: 1rem;
   }
   ul li {
     margin-bottom: 0.5rem;
-  }
-  
-  /* 8) Tables (if needed) */
-  .table-wrapper {
-    overflow-x: auto;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-  }
-  thead {
-    background: #3b82f6;
-    color: #fff;
-  }
-  thead th {
-    font-weight: 600;
-    text-align: left;
-    padding: 0.8rem;
-  }
-  tbody tr {
-    border-bottom: 1px solid #eee;
-  }
-  tbody tr:hover {
-    background-color: #f8fafc;
-  }
-  tbody td {
-    padding: 0.8rem;
   }
   
