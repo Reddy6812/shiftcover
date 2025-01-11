@@ -1,0 +1,171 @@
+/* css/style.css */
+
+/* 1. Global Reset & Fonts */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #e0e0e0, #f4f4f4);
+    color: #333;
+    min-height: 100%;
+  }
+  
+  /* 2. Header & Footer */
+  .main-header {
+    background: #1f2937; /* dark gray/blue */
+    padding: 1.2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  
+  .header-content h1 {
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .main-footer {
+    background: #1f2937;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  /* 3. Container */
+  .container {
+    max-width: 800px;
+    width: 90%;
+    margin: 2rem auto;
+  }
+  
+  /* 4. Card Component */
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+  }
+  
+  .card h2 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .card p {
+    margin-bottom: 1rem;
+    color: #555;
+  }
+  
+  /* 5. Form Layout */
+  .form-layout {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-group select,
+  .form-group input[type="text"],
+  .form-group input[type="email"] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+  
+  .form-group select:focus,
+  .form-group input:focus {
+    outline: none;
+    border-color: #3b82f6; /* Tailwind-ish blue */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+  
+  /* 6. Buttons */
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.2rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    transition: background 0.2s ease, transform 0.1s ease;
+  }
+  
+  .primary-btn {
+    background-color: #3b82f6;
+    color: #fff;
+  }
+  
+  .primary-btn:hover {
+    background-color: #2563eb;
+    transform: scale(1.02);
+  }
+  
+  .danger-btn {
+    background-color: #ef4444;
+    color: #fff;
+  }
+  
+  .danger-btn:hover {
+    background-color: #dc2626;
+    transform: scale(1.02);
+  }
+  
+  /* 7. Table Styles */
+  .table-wrapper {
+    overflow-x: auto; /* Horizontal scroll on small screens */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  thead {
+    background: #3b82f6;
+    color: #fff;
+  }
+  
+  thead th {
+    font-weight: 600;
+    text-align: left;
+    padding: 0.8rem;
+  }
+  
+  tbody tr {
+    border-bottom: 1px solid #eee;
+  }
+  
+  tbody tr:hover {
+    background-color: #f8fafc;
+  }
+  
+  tbody td {
+    padding: 0.8rem;
+  }
+  
+  /* 8. Lists */
+  #myAvailability {
+    list-style: disc inside;
+    margin-top: 0.5rem;
+  }
+  
+  #myAvailability li {
+    margin-bottom: 0.4rem;
+  }
+  

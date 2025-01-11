@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Shifts (Admin)</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Link to our shared stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-content">
+      <h1>My Shifts (Admin View)</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Availability -->
+    <section class="card">
+      <h2>My Available Times</h2>
+      <ul id="myAvailability"><!-- Populated by admin.js --></ul>
+    </section>
+
+    <!-- Submitted Requests -->
+    <section class="card">
+      <h2>All Submitted Requests</h2>
+      <p>Review the requests from staff who need coverage.</p>
+      <div class="table-wrapper">
+        <table id="requestsTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Time Slot</th>
+              <th>Shift Type</th>
+              <th>Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Filled by admin.js -->
+          </tbody>
+        </table>
+      </div>
+      <button id="clearDataBtn" class="btn danger-btn">Clear All Requests</button>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Admin script to display requests -->
+  <script src="scripts/admin.js"></script>
+</body>
+</html>

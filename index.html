@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shift Cover Request</title>
+
+  <!-- Google Font (Optional, but looks cool) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Link to CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Page Header -->
+  <header class="main-header">
+    <div class="header-content">
+      <h1>Shift Cover Request</h1>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+    <!-- Card for the Form -->
+    <section class="card">
+      <h2>Request a Shift Cover</h2>
+      <p>Fill out the form below to request coverage for your shift.</p>
+      
+      <form id="shiftForm" class="form-layout">
+        <!-- Time selection -->
+        <div class="form-group">
+          <label for="timeSelect">Time Slot</label>
+          <select id="timeSelect" name="timeSelect" required>
+            <option value="" disabled selected>-- Select Time Slot --</option>
+            <option value="Morning (8am - 12pm)">Morning (8am - 12pm)</option>
+            <option value="Afternoon (12pm - 4pm)">Afternoon (12pm - 4pm)</option>
+            <option value="Evening (4pm - 8pm)">Evening (4pm - 8pm)</option>
+            <option value="Night (8pm - 12am)">Night (8pm - 12am)</option>
+          </select>
+        </div>
+
+        <!-- Shift selection -->
+        <div class="form-group">
+          <label for="shiftType">Shift Type</label>
+          <select id="shiftType" name="shiftType" required>
+            <option value="" disabled selected>-- Select Shift Type --</option>
+            <option value="Event Staff - Set">Event Staff – Set</option>
+            <option value="Event Staff - Strike">Event Staff – Strike</option>
+            <option value="Event Staff - Early">Event Staff – Early</option>
+            <option value="Event Staff - WTMD">Event Staff – WTMD</option>
+            <option value="Event Staff - Late">Event Staff – Late</option>
+            <option value="Event Staff - Sweep">Event Staff – Sweep</option>
+            <option value="Parking">Parking</option>
+          </select>
+        </div>
+
+        <!-- Name -->
+        <div class="form-group">
+          <label for="userName">Your Name</label>
+          <input type="text" id="userName" name="userName" placeholder="John Doe" required />
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="userEmail">Your Email</label>
+          <input type="email" id="userEmail" name="userEmail" placeholder="john@example.com" required />
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn primary-btn">Submit Request</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Form submission logic -->
+  <script src="scripts/script.js"></script>
+</body>
+</html>
