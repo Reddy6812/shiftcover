@@ -1,6 +1,6 @@
 /* css/style.css */
 
-/* Basic Reset & Font */
+/* Basic reset & font */
 * {
     margin: 0;
     padding: 0;
@@ -139,10 +139,9 @@
     padding: 0.8rem;
   }
   
-  /* Lists */
-  #myAvailability,
+  /* List of Time Slots (Admin) */
   #timeSlotList {
     list-style: disc inside;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
   

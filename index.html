@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Shift Cover Request</title>
 
   <!-- Google Fonts -->
@@ -24,32 +24,32 @@
     </div>
   </header>
 
-  <!-- Main -->
+  <!-- Main Container -->
   <main class="container">
     <section class="card">
       <h2>Request a Shift Cover</h2>
       <p>Fill out the form below to request coverage for your shift.</p>
 
       <form id="shiftForm" class="form-layout">
-        <!-- Time selection (will be populated from localStorage) -->
+        <!-- Time Slot Select (Populated from localStorage) -->
         <div class="form-group">
           <label for="timeSelect">Time Slot</label>
           <select id="timeSelect" name="timeSelect" required>
-            <!-- No default options — script.js will populate from localStorage -->
+            <!-- No default options. Populated by script.js -->
           </select>
         </div>
 
-        <!-- Shift selection (hard-coded for example) -->
+        <!-- Shift Type (example only, feel free to edit) -->
         <div class="form-group">
           <label for="shiftType">Shift Type</label>
           <select id="shiftType" name="shiftType" required>
             <option value="" disabled selected>-- Select Shift Type --</option>
-            <option value="Event Staff - Set">Event Staff – Set</option>
-            <option value="Event Staff - Strike">Event Staff – Strike</option>
-            <option value="Event Staff - Early">Event Staff – Early</option>
-            <option value="Event Staff - WTMD">Event Staff – WTMD</option>
-            <option value="Event Staff - Late">Event Staff – Late</option>
-            <option value="Event Staff - Sweep">Event Staff – Sweep</option>
+            <option value="Event Staff – Set">Event Staff – Set</option>
+            <option value="Event Staff – Strike">Event Staff – Strike</option>
+            <option value="Event Staff – Early">Event Staff – Early</option>
+            <option value="Event Staff – WTMD">Event Staff – WTMD</option>
+            <option value="Event Staff – Late">Event Staff – Late</option>
+            <option value="Event Staff – Sweep">Event Staff – Sweep</option>
             <option value="Parking">Parking</option>
           </select>
         </div>
@@ -57,10 +57,26 @@
         <!-- Name -->
         <div class="form-group">
           <label for="userName">Your Name</label>
-          <input type="text" id="userName" name="userName" placeholder="John Doe" required />
+          <input
+            type="text"
+            id="userName"
+            name="userName"
+            placeholder="John Doe"
+            required
+          />
         </div>
 
         <!-- Email -->
         <div class="form-group">
           <label for="userEmail">Your Email</label>
-          <input type="email" id="userEmail" name="userEmail" placeholder="john@examp
+          <input
+            type="email"
+            id="userEmail"
+            name="userEmail"
+            placeholder="john@example.com"
+            required
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn primar

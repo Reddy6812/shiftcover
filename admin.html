@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>My Shifts (Admin)</title>
 
   <!-- Google Fonts -->
@@ -25,18 +25,18 @@
   </header>
 
   <main class="container">
-    <!-- (1) Manage Time Slots -->
+    <!-- Time Slots Manager -->
     <section class="card">
       <h2>Time Slots Manager</h2>
-      <p>Add or remove time slots that will appear for users on the request form.</p>
+      <p>Add or remove time slots that will appear on the user request form.</p>
 
       <form id="timeSlotForm" class="form-layout">
         <div class="form-group">
-          <label for="newTimeSlot">Add a New Time Slot</label>
+          <label for="newTimeSlot">Day + Start/End Time (e.g. Monday (8am - 2pm))</label>
           <input
             type="text"
             id="newTimeSlot"
-            placeholder="E.g. Late Night (10pm - 2am)"
+            placeholder="Monday (8am - 2pm)"
             required
           />
         </div>
@@ -44,17 +44,11 @@
       </form>
 
       <ul id="timeSlotList">
-        <!-- We’ll populate this with admin.js based on localStorage -->
+        <!-- Populated by admin.js with localStorage data -->
       </ul>
     </section>
 
-    <!-- (2) My Available Times (example) -->
-    <section class="card">
-      <h2>My Available Times</h2>
-      <ul id="myAvailability"></ul>
-    </section>
-
-    <!-- (3) All Submitted Requests -->
+    <!-- All Submitted Requests -->
     <section class="card">
       <h2>All Submitted Requests</h2>
       <p>Below is a table of shift requests submitted by staff.</p>
@@ -82,7 +76,7 @@
     <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
   </footer>
 
-  <!-- Admin logic -->
+  <!-- Admin script -->
   <script src="scripts/admin.js"></script>
 </body>
 </html>
