@@ -25,7 +25,7 @@
   </header>
 
   <main class="container">
-    <!-- 1. Manage Time Slots (NEW) -->
+    <!-- (1) Manage Time Slots -->
     <section class="card">
       <h2>Time Slots Manager</h2>
       <p>Add or remove time slots that will appear for users on the request form.</p>
@@ -44,20 +44,20 @@
       </form>
 
       <ul id="timeSlotList">
-        <!-- Populated by admin.js with current time slots from localStorage -->
+        <!-- We’ll populate this with admin.js based on localStorage -->
       </ul>
     </section>
 
-    <!-- 2. My Available Times (just an example) -->
+    <!-- (2) My Available Times (example) -->
     <section class="card">
       <h2>My Available Times</h2>
-      <ul id="myAvailability"><!-- Populated by admin.js --></ul>
+      <ul id="myAvailability"></ul>
     </section>
 
-    <!-- 3. All Submitted Requests -->
+    <!-- (3) All Submitted Requests -->
     <section class="card">
       <h2>All Submitted Requests</h2>
-      <p>Below is a table of all shift requests submitted.</p>
+      <p>Below is a table of shift requests submitted by staff.</p>
       <div class="table-wrapper">
         <table id="requestsTable">
           <thead>
@@ -70,7 +70,7 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Will be populated by admin.js -->
+            <!-- Populated by admin.js -->
           </tbody>
         </table>
       </div>
@@ -78,12 +78,11 @@
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="main-footer">
     <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
   </footer>
 
-  <!-- Admin script for availability, time slots, and requests -->
+  <!-- Admin logic -->
   <script src="scripts/admin.js"></script>
 </body>
 </html>

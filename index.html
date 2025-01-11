@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shift Cover Request</title>
 
-  <!-- Google Fonts (for a cool UI) -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -31,15 +31,15 @@
       <p>Fill out the form below to request coverage for your shift.</p>
 
       <form id="shiftForm" class="form-layout">
-        <!-- Time selection (dynamically populated) -->
+        <!-- Time selection (will be populated from localStorage) -->
         <div class="form-group">
           <label for="timeSelect">Time Slot</label>
           <select id="timeSelect" name="timeSelect" required>
-            <!-- Options will be inserted by script.js -->
+            <!-- No default options — script.js will populate from localStorage -->
           </select>
         </div>
 
-        <!-- Shift selection (still hard-coded in this example) -->
+        <!-- Shift selection (hard-coded for example) -->
         <div class="form-group">
           <label for="shiftType">Shift Type</label>
           <select id="shiftType" name="shiftType" required>
@@ -63,21 +63,4 @@
         <!-- Email -->
         <div class="form-group">
           <label for="userEmail">Your Email</label>
-          <input type="email" id="userEmail" name="userEmail" placeholder="john@example.com" required />
-        </div>
-
-        <!-- Submit -->
-        <button type="submit" class="btn primary-btn">Submit Request</button>
-      </form>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="main-footer">
-    <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
-  </footer>
-
-  <!-- Script for user form & dynamic times -->
-  <script src="scripts/script.js"></script>
-</body>
-</html>
+          <input type="email" id="userEmail" name="userEmail" placeholder="john@examp
