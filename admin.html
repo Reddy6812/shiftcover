@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>My Shifts (Admin)</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
     rel="stylesheet"
   />
 
-  <!-- Link to CSS -->
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -25,14 +25,14 @@
   </header>
 
   <main class="container">
-    <!-- Time Slots Manager -->
+    <!-- (1) Time Slots Manager -->
     <section class="card">
       <h2>Time Slots Manager</h2>
-      <p>Add or remove time slots that will appear on the user request form.</p>
+      <p>Add or remove day/time ranges (e.g. "Monday (8am - 2pm)") that will appear in the user form.</p>
 
       <form id="timeSlotForm" class="form-layout">
         <div class="form-group">
-          <label for="newTimeSlot">Day + Start/End Time (e.g. Monday (8am - 2pm))</label>
+          <label for="newTimeSlot">Enter Day/Time Range</label>
           <input
             type="text"
             id="newTimeSlot"
@@ -44,31 +44,17 @@
       </form>
 
       <ul id="timeSlotList">
-        <!-- Populated by admin.js with localStorage data -->
+        <!-- Populated by admin.js from localStorage -->
       </ul>
     </section>
 
-    <!-- All Submitted Requests -->
+    <!-- (2) My Available Timings: All Submitted Requests -->
     <section class="card">
-      <h2>All Submitted Requests</h2>
-      <p>Below is a table of shift requests submitted by staff.</p>
-      <div class="table-wrapper">
-        <table id="requestsTable">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Time Slot</th>
-              <th>Shift Type</th>
-              <th>Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Populated by admin.js -->
-          </tbody>
-        </table>
-      </div>
-      <button id="clearDataBtn" class="btn danger-btn">Clear All Requests</button>
+      <h2>My Available Timings</h2>
+      <p>All shift cover requests submitted by staff:</p>
+      <ul id="requestsListAdmin">
+        <!-- Populated by admin.js with a delete button for each -->
+      </ul>
     </section>
   </main>
 
