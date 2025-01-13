@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Shift Cover Request</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="main-header">
@@ -23,35 +17,27 @@
     </div>
   </header>
 
-  <main class="index-main">
-    <!-- Left: Form -->
-    <section class="card form-section">
+  <main class="container">
+    <section class="card">
       <h2>Request a Shift Cover</h2>
-      <p>Fill out the form below to request coverage for your shift.</p>
+      <p>Pick a date to see available time slots, then fill out shift details.</p>
 
-      <form id="shiftForm" class="form-layout">
-        <!-- Date -->
+      <form id="requestForm" class="form-layout">
         <div class="form-group">
-          <label for="shiftDate">Date of Shift</label>
-          <input
-            type="date"
-            id="shiftDate"
-            required
-          />
+          <label for="reqDateInput">Date of Shift (YYYY-MM-DD)</label>
+          <input type="date" id="reqDateInput" required />
         </div>
 
-        <!-- Time Slot (populated from server) -->
         <div class="form-group">
-          <label for="timeSlotSelect">Day/Time Range</label>
-          <select id="timeSlotSelect" required>
-            <!-- Dynamically loaded by script.js -->
+          <label for="reqSlotSelect">Available Time Slots</label>
+          <select id="reqSlotSelect" required>
+            <option value="" disabled selected>-- Select Date First --</option>
           </select>
         </div>
 
-        <!-- Shift Type -->
         <div class="form-group">
-          <label for="shiftType">Shift Type</label>
-          <select id="shiftType" required>
+          <label for="reqShiftType">Shift Type</label>
+          <select id="reqShiftType" required>
             <option value="" disabled selected>-- Select Shift Type --</option>
             <option value="Event Staff – Set">Event Staff – Set</option>
             <option value="Event Staff – Strike">Event Staff – Strike</option>
@@ -63,40 +49,41 @@
           </select>
         </div>
 
-        <!-- Name -->
         <div class="form-group">
-          <label for="userName">Your Name</label>
-          <input
-            type="text"
-            id="userName"
-            placeholder="John Doe"
-            required
-          />
+          <label for="reqUserName">Your Name</label>
+          <input type="text" id="reqUserName" placeholder="John Doe" required />
         </div>
 
-        <!-- Email -->
         <div class="form-group">
-          <label for="userEmail">Your Email</label>
-          <input
-            type="email"
-            id="userEmail"
-            placeholder="john@example.com"
-            required
-          />
+          <label for="reqUserEmail">Your Email</label>
+          <input type="email" id="reqUserEmail" placeholder="john@example.com" required />
         </div>
 
         <button type="submit" class="btn primary-btn">Submit Request</button>
       </form>
     </section>
 
-    <!-- Right: "My Available Timings" -->
-    <aside class="card sidebar">
+    <!-- Table of all requests -->
+    <section class="card">
       <h2>My Available Timings</h2>
       <p>Recently submitted requests:</p>
-      <ul id="requestList">
-        <!-- Populated by script.js -->
-      </ul>
-    </aside>
+
+      <table id="myRequestsTable" style="width:100%; border-collapse: collapse; margin-top:1rem;">
+        <thead>
+          <tr style="background:#3b82f6; color:#fff;">
+            <th style="padding:8px;">#</th>
+            <th style="padding:8px;">Date</th>
+            <th style="padding:8px;">Start</th>
+            <th style="padding:8px;">End</th>
+            <th style="padding:8px;">Shift Type</th>
+            <th style="padding:8px;">Name</th>
+            <th style="padding:8px;">Email</th>
+            <th style="padding:8px;">Delete</th>
+          </tr>
+        </thead>
+        <tbody><!-- Populated by script.js --></tbody>
+      </table>
+    </section>
   </main>
 
   <footer class="main-footer">

@@ -1,7 +1,7 @@
 {
     "name": "shiftcover",
     "version": "1.0.0",
-    "description": "Shift Cover Request with Admin page (Node/Express)",
+    "description": "Shift Cover with day/time drop-down in Admin & user pages + date field for user",
     "main": "server.js",
     "scripts": {
       "start": "node server.js"

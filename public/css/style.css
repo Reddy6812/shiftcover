@@ -9,7 +9,6 @@
     color: #333;
     height: 100%;
   }
-  
   .main-header {
     background: #1f2937;
     padding: 1.2rem;
@@ -27,7 +26,6 @@
     text-align: center;
     margin-top: 2rem;
   }
-  
   .container {
     max-width: 800px;
     width: 90%;
@@ -48,21 +46,6 @@
     margin-bottom: 1rem;
     color: #555;
   }
-  
-  .index-main {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    padding: 2rem;
-  }
-  .form-section {
-    flex: 2;
-  }
-  .sidebar {
-    flex: 1;
-    max-width: 300px;
-  }
-  
   .form-layout {
     display: grid;
     gap: 1rem;
@@ -75,20 +58,13 @@
     font-weight: 500;
     margin-bottom: 0.5rem;
   }
-  .form-group input,
-  .form-group select {
+  .form-group select,
+  .form-group input {
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 0.8rem;
     font-size: 0.95rem;
   }
-  .form-group input:focus,
-  .form-group select:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
-  }
-  
   .btn {
     display: inline-block;
     padding: 0.75rem 1.2rem;
@@ -97,10 +73,6 @@
     cursor: pointer;
     border: none;
     transition: background 0.2s ease, transform 0.1s ease;
-  }
-  .btn-small {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
   }
   .primary-btn {
     background-color: #3b82f6;
@@ -118,12 +90,21 @@
     background-color: #dc2626;
     transform: scale(1.02);
   }
-  
+  .btn-small {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
   ul {
     list-style: disc inside;
     margin-top: 1rem;
   }
-  ul li {
-    margin-bottom: 0.5rem;
+  table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
   }
   
