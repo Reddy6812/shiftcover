@@ -1,1 +1,35 @@
-[]
+[
+  {
+    "id": 1736777222816,
+    "date": "2025-01-15",
+    "startTime": "4:00am",
+    "endTime": "12:00pm",
+    "shiftType": "Event Staff – Early",
+    "userName": "hbbjk",
+    "userEmail": "jkn@ghv.com",
+    "status": "pending",
+    "submittedAt": "2025-01-13T14:07:02.816Z"
+  },
+  {
+    "id": 1736777327928,
+    "date": "2025-01-15",
+    "startTime": "4:00am",
+    "endTime": "12:00pm",
+    "shiftType": "Event Staff – Set",
+    "userName": "hbbjk",
+    "userEmail": "jkn@ghv.com",
+    "status": "pending",
+    "submittedAt": "2025-01-13T14:08:47.928Z"
+  },
+  {
+    "id": 1736777520347,
+    "date": "2025-01-15",
+    "startTime": "4:00am",
+    "endTime": "12:00pm",
+    "shiftType": "Event Staff – Strike",
+    "userName": "hbbjk",
+    "userEmail": "jkn@ghv.com",
+    "status": "pending",
+    "submittedAt": "2025-01-13T14:12:00.347Z"
+  }
+]

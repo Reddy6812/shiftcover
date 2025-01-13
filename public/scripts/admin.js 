@@ -1,92 +1,8 @@
 // public/scripts/admin.js
 document.addEventListener("DOMContentLoaded", () => {
-  const slotDateInput = document.getElementById("slotDateInput");
-  const slotStartSelect = document.getElementById("slotStartSelect");
-  const slotEndSelect = document.getElementById("slotEndSelect");
-  const slotList = document.getElementById("slotList");
-  const slotForm = document.getElementById("slotForm");
-
-  // Function to load time slots and display them in admin page
-  function loadSlots() {
-    fetch('/api/timeslots')
-      .then(res => res.json())
-      .then(slots => {
-        slotList.innerHTML = "";
-        if (!slots.length) {
-          slotList.textContent = "No time slots yet.";
-          return;
-        }
-        slots.forEach(s => {
-          const li = document.createElement("li");
-          li.textContent = `${s.date} (${s.startTime} - ${s.endTime})`;
-          const delBtn = document.createElement("button");
-          delBtn.className = "btn danger-btn btn-small";
-          delBtn.style.marginLeft = "10px";
-          delBtn.textContent = "Delete";
-          delBtn.addEventListener("click", () => {
-            deleteSlot(s.id);
-          });
-          li.appendChild(delBtn);
-          slotList.appendChild(li);
-        });
-      })
-      .catch(err => console.error("Error loading slots:", err));
-  }
-
-  // Function to add a new time slot
-  function addSlot(date, startTime, endTime) {
-    console.log("Adding slot:", { date, startTime, endTime });
-    fetch('/api/timeslots', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date, startTime, endTime })
-    })
-      .then(res => {
-        console.log("Response status:", res.status);
-        if (!res.ok) {
-          throw new Error("Failed to add time slot");
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log("Server response:", data);
-        alert("Time slot added successfully!");
-        loadSlots();
-      })
-      .catch(err => {
-        console.error("Error adding slot:", err);
-        alert("Failed to add time slot. Please try again.");
-      });
-  }
-
-  // Function to delete a time slot by ID
-  function deleteSlot(slotId) {
-    console.log("Deleting slot with ID:", slotId);
-    fetch(`/api/timeslots/${slotId}`, { method: 'DELETE' })
-      .then(res => res.json())
-      .then(data => {
-        console.log("Slot deletion response:", data);
-        loadSlots();
-      })
-      .catch(err => console.error("Error deleting slot:", err));
-  }
-
-  // Event listener for time slot form submission
-  slotForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const dateVal = slotDateInput.value;
-    const stVal = slotStartSelect.value;
-    const enVal = slotEndSelect.value;
-    if (!dateVal || !stVal || !enVal) return;
-    addSlot(dateVal, stVal, enVal);
-  });
-
-  loadSlots();
-
-  // ----------------- REQUESTS MANAGEMENT (Admin) -----------------
   const requestsTableBody = document.querySelector("#requestsTable tbody");
 
-  // Function to load requests and display them in admin page
+  // Load all shift requests (pending, approved, and rejected)
   function loadRequests() {
     fetch('/api/requests')
       .then(res => res.json())
@@ -101,27 +17,41 @@ document.addEventListener("DOMContentLoaded", () => {
           row.insertCell().textContent = r.shiftType;
           row.insertCell().textContent = r.userName;
           row.insertCell().textContent = r.userEmail;
-          const delCell = row.insertCell();
-          const delBtn = document.createElement("button");
-          delBtn.textContent = "Delete";
-          delBtn.className = "btn danger-btn btn-small";
-          delBtn.addEventListener("click", () => {
-            deleteRequest(r.id);
-          });
-          delCell.appendChild(delBtn);
+          row.insertCell().textContent = r.status;
+          
+          const actionCell = row.insertCell();
+          if (r.status === "pending") {
+            const approveBtn = document.createElement("button");
+            approveBtn.textContent = "Approve";
+            approveBtn.className = "btn primary-btn btn-small";
+            approveBtn.style.marginRight = "5px";
+            approveBtn.addEventListener("click", () => updateStatus(r.id, "approved"));
+            
+            const rejectBtn = document.createElement("button");
+            rejectBtn.textContent = "Reject";
+            rejectBtn.className = "btn danger-btn btn-small";
+            rejectBtn.addEventListener("click", () => updateStatus(r.id, "rejected"));
+            
+            actionCell.appendChild(approveBtn);
+            actionCell.appendChild(rejectBtn);
+          } else {
+            actionCell.textContent = "-";
+          }
         });
       })
       .catch(err => console.error("Error loading requests:", err));
   }
 
-  // Function to delete a request by ID
-  function deleteRequest(reqId) {
-    fetch(`/api/requests/${reqId}`, { method: 'DELETE' })
+  // Update the status of a request
+  function updateStatus(requestId, status) {
+    fetch(`/api/requests/${requestId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status })
+    })
       .then(res => res.json())
-      .then(() => {
-        loadRequests();
-      })
-      .catch(err => console.error("Error deleting request:", err));
+      .then(() => loadRequests())
+      .catch(err => console.error("Error updating status:", err));
   }
 
   loadRequests();

@@ -12,104 +12,67 @@ app.use(cors());
 // Serve static files from "public"
 app.use(express.static('public'));
 
-// Paths to JSON data files (ensure these are in a folder named "data" in your project root)
-const timeslotsPath = path.join(__dirname, 'data', 'timeslots.json');
-const requestsPath = path.join(__dirname, 'data', 'requests.json');
+// Define the directory and file paths
+const dataDir = path.join(__dirname, 'data');
+const requestsPath = path.join(dataDir, 'requests.json');
 
-// Helper: Read JSON from file, with debug logs
+// Helper: Ensure the data folder and files exist with an initial value ([])
+// This runs at server start.
+function ensureDataFiles() {
+  if (!fs.existsSync(dataDir)) {
+    console.log(`Data directory not found. Creating ${dataDir}`);
+    fs.mkdirSync(dataDir);
+  }
+  if (!fs.existsSync(requestsPath)) {
+    console.log(`File ${requestsPath} not found. Creating and initializing with []`);
+    fs.writeFileSync(requestsPath, '[]', 'utf8');
+  }
+  // If you had other files like timeslots.json, you could ensure them similarly:
+  // const timeslotsPath = path.join(dataDir, 'timeslots.json');
+  // if (!fs.existsSync(timeslotsPath)) {
+  //   console.log(`File ${timeslotsPath} not found. Creating and initializing with []`);
+  //   fs.writeFileSync(timeslotsPath, '[]', 'utf8');
+  // }
+}
+
+// Call this function at server startup
+ensureDataFiles();
+
+// Helper: Read JSON from file with graceful error handling
 function readJSON(filePath) {
   try {
     const rawData = fs.readFileSync(filePath, 'utf8');
-    console.log(`\n[DEBUG] Raw data read from ${filePath}:\n`, rawData);
-    const parsed = JSON.parse(rawData);
-    console.log(`[DEBUG] Parsed data:`, parsed);
-    return parsed;
+    return JSON.parse(rawData);
   } catch (err) {
     console.error(`Error reading/parsing ${filePath}:`, err);
     return [];
   }
 }
 
-// Helper: Write JSON to file, with debug logs
+// Helper: Write JSON to file
 function writeJSON(filePath, data) {
   try {
     const jsonData = JSON.stringify(data, null, 2);
-    console.log(`\n[DEBUG] Attempting to write to ${filePath} with data:`);
-    console.log(jsonData);
     fs.writeFileSync(filePath, jsonData, 'utf8');
-    console.log(`[DEBUG] Successfully wrote data to ${filePath}\n`);
   } catch (err) {
     console.error(`Error writing to ${filePath}:`, err);
     throw err;
   }
 }
 
-// ----------------- TIME SLOTS ENDPOINTS -----------------
-
-// GET /api/timeslots?date=YYYY-MM-DD
-app.get('/api/timeslots', (req, res) => {
-  const dateParam = req.query.date;
-  const allSlots = readJSON(timeslotsPath);
-  if (dateParam) {
-    const filtered = allSlots.filter(s => s.date === dateParam);
-    return res.json(filtered);
-  }
-  return res.json(allSlots);
-});
-
-// POST /api/timeslots => Add a new time slot
-app.post('/api/timeslots', (req, res) => {
-  const { date, startTime, endTime } = req.body;
-  if (!date || !startTime || !endTime) {
-    console.error("Missing fields in time slot request:", req.body);
-    return res.status(400).json({ error: 'Missing date, startTime, or endTime' });
-  }
-  try {
-    let slots = readJSON(timeslotsPath);
-    const newSlot = {
-      id: Date.now(),
-      date,
-      startTime,
-      endTime
-    };
-    slots.push(newSlot);
-    writeJSON(timeslotsPath, slots);
-    console.log("New time slot added:", newSlot);
-    return res.status(201).json(newSlot);
-  } catch (err) {
-    console.error("Error adding time slot:", err.message);
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-// DELETE /api/timeslots/:id => Remove a time slot by ID
-app.delete('/api/timeslots/:id', (req, res) => {
-  const slotId = parseInt(req.params.id, 10);
-  try {
-    let slots = readJSON(timeslotsPath);
-    const updatedSlots = slots.filter(s => s.id !== slotId);
-    writeJSON(timeslotsPath, updatedSlots);
-    console.log(`Deleted time slot with ID ${slotId}. Remaining slots:`, updatedSlots);
-    return res.json({ success: true });
-  } catch (err) {
-    console.error("Error deleting time slot:", err.message);
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
 // ----------------- REQUESTS ENDPOINTS -----------------
 
-// GET /api/requests => Return all requests
+// GET /api/requests
 app.get('/api/requests', (req, res) => {
   const requests = readJSON(requestsPath);
-  return res.json(requests);
+  res.json(requests);
 });
 
-// POST /api/requests => Create a new shift request
+// POST /api/requests
+// Creates a new shift request with status "pending"
 app.post('/api/requests', (req, res) => {
   const { date, startTime, endTime, shiftType, userName, userEmail } = req.body;
   if (!date || !startTime || !endTime || !shiftType || !userName || !userEmail) {
-    console.error("Missing fields in request submission:", req.body);
     return res.status(400).json({ error: 'Missing required fields' });
   }
   try {
@@ -122,40 +85,63 @@ app.post('/api/requests', (req, res) => {
       shiftType,
       userName,
       userEmail,
+      status: "pending",  // default status
       submittedAt: new Date().toISOString()
     };
     requests.push(newReq);
     writeJSON(requestsPath, requests);
-    console.log("New request submitted:", newReq);
-    return res.status(201).json(newReq);
+    res.status(201).json(newReq);
   } catch (err) {
-    console.error("Error submitting request:", err.message);
-    return res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// DELETE /api/requests/:id => Remove a request by ID
+// PUT /api/requests/:id
+// Update a request's status (approve or reject)
+app.put('/api/requests/:id', (req, res) => {
+  const reqId = parseInt(req.params.id, 10);
+  const { status } = req.body;
+  if (!status || !["approved", "rejected"].includes(status)) {
+    return res.status(400).json({ error: 'Status must be "approved" or "rejected"' });
+  }
+  try {
+    let requests = readJSON(requestsPath);
+    let found = false;
+    requests = requests.map(r => {
+      if (r.id === reqId) {
+        r.status = status;
+        found = true;
+      }
+      return r;
+    });
+    if (!found) return res.status(404).json({ error: 'Request not found' });
+    writeJSON(requestsPath, requests);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// DELETE /api/requests/:id
+// Delete a request by ID
 app.delete('/api/requests/:id', (req, res) => {
   const reqId = parseInt(req.params.id, 10);
   try {
     let requests = readJSON(requestsPath);
-    const updatedRequests = requests.filter(r => r.id !== reqId);
-    writeJSON(requestsPath, updatedRequests);
-    console.log(`Deleted request with ID ${reqId}. Remaining requests:`, updatedRequests);
-    return res.json({ success: true });
+    const newRequests = requests.filter(r => r.id !== reqId);
+    writeJSON(requestsPath, newRequests);
+    res.json({ success: true });
   } catch (err) {
-    console.error("Error deleting request:", err.message);
-    return res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// 404 Fallback
-app.use((req, res) => {
-  res.status(404).send('Not Found');
-});
+// 404 fallback route
+app.use((req, res) => res.status(404).send('Not Found'));
 
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  console.log("Note: On Render, the file system is ephemeral. Consider using a database for persistence in production.");
 });
