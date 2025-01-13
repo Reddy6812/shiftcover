@@ -2,56 +2,66 @@
 document.addEventListener("DOMContentLoaded", () => {
   const requestsTableBody = document.querySelector("#requestsTable tbody");
 
-  // Load all shift requests (pending, approved, and rejected)
-  function loadRequests() {
-    fetch('/api/requests')
-      .then(res => res.json())
-      .then(requests => {
-        requestsTableBody.innerHTML = "";
-        requests.forEach((r, i) => {
-          const row = requestsTableBody.insertRow();
-          row.insertCell().textContent = i + 1;
-          row.insertCell().textContent = r.date;
-          row.insertCell().textContent = r.startTime;
-          row.insertCell().textContent = r.endTime;
-          row.insertCell().textContent = r.shiftType;
-          row.insertCell().textContent = r.userName;
-          row.insertCell().textContent = r.userEmail;
-          row.insertCell().textContent = r.status;
-          
-          const actionCell = row.insertCell();
-          if (r.status === "pending") {
-            const approveBtn = document.createElement("button");
-            approveBtn.textContent = "Approve";
-            approveBtn.className = "btn primary-btn btn-small";
-            approveBtn.style.marginRight = "5px";
-            approveBtn.addEventListener("click", () => updateStatus(r.id, "approved"));
-            
-            const rejectBtn = document.createElement("button");
-            rejectBtn.textContent = "Reject";
-            rejectBtn.className = "btn danger-btn btn-small";
-            rejectBtn.addEventListener("click", () => updateStatus(r.id, "rejected"));
-            
-            actionCell.appendChild(approveBtn);
-            actionCell.appendChild(rejectBtn);
-          } else {
-            actionCell.textContent = "-";
-          }
-        });
-      })
-      .catch(err => console.error("Error loading requests:", err));
+  // Function to load all shift requests
+  async function loadRequests() {
+    try {
+      const response = await fetch('/api/requests');
+      if (!response.ok) throw new Error('Failed to fetch requests');
+      const requests = await response.json();
+      requestsTableBody.innerHTML = "";
+
+      requests.forEach((r, i) => {
+        const row = requestsTableBody.insertRow();
+        row.insertCell().textContent = i + 1;
+        row.insertCell().textContent = r.date;
+        row.insertCell().textContent = r.start_time;
+        row.insertCell().textContent = r.end_time;
+        row.insertCell().textContent = r.shift_type;
+        row.insertCell().textContent = r.user_name;
+        row.insertCell().textContent = r.user_email;
+        row.insertCell().textContent = r.status;
+        const actionCell = row.insertCell();
+
+        if (r.status === "pending") {
+          const approveBtn = document.createElement("button");
+          approveBtn.textContent = "Approve";
+          approveBtn.className = "btn primary-btn btn-small";
+          approveBtn.style.marginRight = "5px";
+          approveBtn.addEventListener("click", () => updateStatus(r.id, "approved"));
+
+          const rejectBtn = document.createElement("button");
+          rejectBtn.textContent = "Reject";
+          rejectBtn.className = "btn danger-btn btn-small";
+          rejectBtn.addEventListener("click", () => updateStatus(r.id, "rejected"));
+
+          actionCell.appendChild(approveBtn);
+          actionCell.appendChild(rejectBtn);
+        } else {
+          actionCell.textContent = "-";
+        }
+      });
+    } catch (error) {
+      console.error("Error loading requests:", error);
+      alert("Failed to load requests. Please try again later.");
+    }
   }
 
-  // Update the status of a request
-  function updateStatus(requestId, status) {
-    fetch(`/api/requests/${requestId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status })
-    })
-      .then(res => res.json())
-      .then(() => loadRequests())
-      .catch(err => console.error("Error updating status:", err));
+  // Function to update request status
+  async function updateStatus(requestId, status) {
+    if (!confirm(`Are you sure you want to ${status} this request?`)) return;
+    try {
+      const response = await fetch(`/api/requests/${requestId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status })
+      });
+      if (!response.ok) throw new Error('Failed to update status');
+      await loadRequests();
+      alert(`Request has been ${status}.`);
+    } catch (error) {
+      console.error("Error updating request status:", error);
+      alert("Failed to update request. Please try again later.");
+    }
   }
 
   loadRequests();
