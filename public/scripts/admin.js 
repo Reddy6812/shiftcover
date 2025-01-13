@@ -1,14 +1,12 @@
 // public/scripts/admin.js
-
 document.addEventListener("DOMContentLoaded", () => {
-  // Elements for managing time slots
   const slotDateInput = document.getElementById("slotDateInput");
   const slotStartSelect = document.getElementById("slotStartSelect");
   const slotEndSelect = document.getElementById("slotEndSelect");
   const slotList = document.getElementById("slotList");
   const slotForm = document.getElementById("slotForm");
 
-  // Load and display available time slots
+  // Function to load time slots and display them in admin page
   function loadSlots() {
     fetch('/api/timeslots')
       .then(res => res.json())
@@ -21,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
         slots.forEach(s => {
           const li = document.createElement("li");
           li.textContent = `${s.date} (${s.startTime} - ${s.endTime})`;
-
           const delBtn = document.createElement("button");
           delBtn.className = "btn danger-btn btn-small";
           delBtn.style.marginLeft = "10px";
@@ -29,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
           delBtn.addEventListener("click", () => {
             deleteSlot(s.id);
           });
-
           li.appendChild(delBtn);
           slotList.appendChild(li);
         });
@@ -37,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(err => console.error("Error loading slots:", err));
   }
 
-  // Add a new time slot
+  // Function to add a new time slot
   function addSlot(date, startTime, endTime) {
     console.log("Adding slot:", { date, startTime, endTime });
     fetch('/api/timeslots', {
@@ -45,25 +41,25 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ date, startTime, endTime })
     })
-    .then(res => {
-      console.log("Response status:", res.status);
-      if (!res.ok) {
-        throw new Error("Failed to add time slot");
-      }
-      return res.json();
-    })
-    .then(data => {
-      console.log("Server response:", data);
-      alert("Time slot added successfully!");
-      loadSlots();
-    })
-    .catch(err => {
-      console.error("Error adding slot:", err);
-      alert("Failed to add time slot. Please try again.");
-    });
+      .then(res => {
+        console.log("Response status:", res.status);
+        if (!res.ok) {
+          throw new Error("Failed to add time slot");
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log("Server response:", data);
+        alert("Time slot added successfully!");
+        loadSlots();
+      })
+      .catch(err => {
+        console.error("Error adding slot:", err);
+        alert("Failed to add time slot. Please try again.");
+      });
   }
 
-  // Delete a time slot by ID
+  // Function to delete a time slot by ID
   function deleteSlot(slotId) {
     console.log("Deleting slot with ID:", slotId);
     fetch(`/api/timeslots/${slotId}`, { method: 'DELETE' })
@@ -75,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(err => console.error("Error deleting slot:", err));
   }
 
-  // Handle time slot form submission
+  // Event listener for time slot form submission
   slotForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const dateVal = slotDateInput.value;
@@ -83,19 +79,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const enVal = slotEndSelect.value;
     if (!dateVal || !stVal || !enVal) return;
     addSlot(dateVal, stVal, enVal);
-    // Optionally clear fields after submission:
-    // slotDateInput.value = "";
-    // slotStartSelect.value = "";
-    // slotEndSelect.value = "";
   });
 
   loadSlots();
 
-  // ======= REQUESTS MANAGEMENT (for admin) ======= //
-
+  // ----------------- REQUESTS MANAGEMENT (Admin) -----------------
   const requestsTableBody = document.querySelector("#requestsTable tbody");
 
-  // Load and display all requests
+  // Function to load requests and display them in admin page
   function loadRequests() {
     fetch('/api/requests')
       .then(res => res.json())
@@ -110,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
           row.insertCell().textContent = r.shiftType;
           row.insertCell().textContent = r.userName;
           row.insertCell().textContent = r.userEmail;
-
           const delCell = row.insertCell();
           const delBtn = document.createElement("button");
           delBtn.textContent = "Delete";
@@ -124,12 +114,11 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(err => console.error("Error loading requests:", err));
   }
 
-  // Delete a request by ID
+  // Function to delete a request by ID
   function deleteRequest(reqId) {
     fetch(`/api/requests/${reqId}`, { method: 'DELETE' })
       .then(res => res.json())
-      .then(data => {
-        console.log("Request deletion response:", data);
+      .then(() => {
         loadRequests();
       })
       .catch(err => console.error("Error deleting request:", err));

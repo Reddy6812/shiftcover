@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <title>Shift Cover Request</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <!-- Fonts & CSS -->
+  <!-- Google Fonts & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -16,25 +16,21 @@
       <h1>Shift Cover Request</h1>
     </div>
   </header>
-
   <main class="container">
     <section class="card">
       <h2>Request a Shift Cover</h2>
       <p>Pick a date to see available time slots, then fill out shift details.</p>
-
       <form id="requestForm" class="form-layout">
         <div class="form-group">
           <label for="reqDateInput">Date of Shift (YYYY-MM-DD)</label>
           <input type="date" id="reqDateInput" required />
         </div>
-
         <div class="form-group">
           <label for="reqSlotSelect">Available Time Slots</label>
           <select id="reqSlotSelect" required>
             <option value="" disabled selected>-- Select Date First --</option>
           </select>
         </div>
-
         <div class="form-group">
           <label for="reqShiftType">Shift Type</label>
           <select id="reqShiftType" required>
@@ -48,26 +44,21 @@
             <option value="Parking">Parking</option>
           </select>
         </div>
-
         <div class="form-group">
           <label for="reqUserName">Your Name</label>
           <input type="text" id="reqUserName" placeholder="John Doe" required />
         </div>
-
         <div class="form-group">
           <label for="reqUserEmail">Your Email</label>
           <input type="email" id="reqUserEmail" placeholder="john@example.com" required />
         </div>
-
         <button type="submit" class="btn primary-btn">Submit Request</button>
       </form>
     </section>
-
     <!-- Table of all requests -->
     <section class="card">
       <h2>My Available Timings</h2>
       <p>Recently submitted requests:</p>
-
       <table id="myRequestsTable" style="width:100%; border-collapse: collapse; margin-top:1rem;">
         <thead>
           <tr style="background:#3b82f6; color:#fff;">
@@ -85,11 +76,9 @@
       </table>
     </section>
   </main>
-
   <footer class="main-footer">
     <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
   </footer>
-
   <script src="scripts/script.js"></script>
 </body>
 </html>

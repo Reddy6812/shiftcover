@@ -7,10 +7,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -19,13 +16,11 @@
       <h1>ShiftCover Admin</h1>
     </div>
   </header>
-
   <main class="container">
     <!-- Time Slots Manager -->
     <section class="card">
       <h2>Time Slots Manager</h2>
       <p>Add or remove date/time slots that the user can select.</p>
-
       <form id="slotForm" class="form-layout">
         <div class="form-group">
           <label for="slotDateInput">Date (YYYY-MM-DD)</label>
@@ -75,15 +70,12 @@
         </div>
         <button type="submit" class="btn primary-btn">Add Time Slot</button>
       </form>
-
       <ul id="slotList" style="margin-top:1rem;"></ul>
     </section>
-
-    <!-- All Requests -->
+    <!-- All Shift Requests -->
     <section class="card">
       <h2>All Shift Requests</h2>
       <p>Below is a table of user-submitted requests.</p>
-
       <table id="requestsTable" style="width:100%; border-collapse: collapse; margin-top:1rem;">
         <thead>
           <tr style="background:#3b82f6; color:#fff;">
@@ -101,11 +93,9 @@
       </table>
     </section>
   </main>
-
   <footer class="main-footer">
     <p>&copy; 2025 ShiftCover. All Rights Reserved.</p>
   </footer>
-
   <script src="scripts/admin.js"></script>
 </body>
 </html>

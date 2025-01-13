@@ -1,5 +1,4 @@
 // public/scripts/script.js
-
 document.addEventListener("DOMContentLoaded", () => {
   const reqDateInput = document.getElementById("reqDateInput");
   const reqSlotSelect = document.getElementById("reqSlotSelect");
@@ -7,22 +6,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const reqUserName = document.getElementById("reqUserName");
   const reqUserEmail = document.getElementById("reqUserEmail");
   const requestForm = document.getElementById("requestForm");
-  
   const myRequestsTableBody = document.querySelector("#myRequestsTable tbody");
-  
-  // 1) On date change, load the time slots for that date
+
+  // On date change, load available time slots for that date
   reqDateInput.addEventListener("change", () => {
     const dateVal = reqDateInput.value;
     if (!dateVal) return;
-  
-    // Clear old slots and add default text
     reqSlotSelect.innerHTML = "";
     const defaultOpt = document.createElement("option");
     defaultOpt.disabled = true;
     defaultOpt.selected = true;
     defaultOpt.textContent = `-- Time slots for ${dateVal} --`;
     reqSlotSelect.appendChild(defaultOpt);
-  
     fetch(`/api/timeslots?date=${dateVal}`)
       .then(res => res.json())
       .then(slots => {
@@ -33,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
           reqSlotSelect.appendChild(noOpt);
         } else {
           slots.forEach(s => {
-            // Each slot has: { id, date, startTime, endTime }
             const opt = document.createElement("option");
             opt.value = s.id;
             opt.textContent = `${s.startTime} - ${s.endTime}`;
@@ -43,8 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(err => console.error("Error fetching timeslots:", err));
   });
-  
-  // 2) Load existing requests
+
+  // Function to load existing requests on user page
   function loadRequests() {
     fetch('/api/requests')
       .then(res => res.json())
@@ -59,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
           row.insertCell().textContent = r.shiftType;
           row.insertCell().textContent = r.userName;
           row.insertCell().textContent = r.userEmail;
-  
           const delCell = row.insertCell();
           const delBtn = document.createElement("button");
           delBtn.textContent = "Delete";
@@ -73,7 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(err => console.error("Error loading requests:", err));
   }
   loadRequests();
-  
+
+  // Function to delete a request by ID
   function deleteRequest(reqId) {
     fetch(`/api/requests/${reqId}`, { method: 'DELETE' })
       .then(res => res.json())
@@ -82,22 +76,20 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(err => console.error("Error deleting request:", err));
   }
-  
-  // 3) Submit new request
+
+  // Handle submission of a new shift request
   requestForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const dateVal = reqDateInput.value;
-    const slotId = reqSlotSelect.value; // we get the id of the selected slot
+    const slotId = reqSlotSelect.value;
     const shiftVal = reqShiftType.value;
     const nameVal = reqUserName.value;
     const emailVal = reqUserEmail.value;
-  
     if (!dateVal || !slotId || !shiftVal || !nameVal || !emailVal) {
       alert("Fill in all fields and pick a valid slot!");
       return;
     }
-  
-    // Find the chosen slot's start/end times from all slots
+    // Find the chosen slot from all available slots
     fetch('/api/timeslots')
       .then(res => res.json())
       .then(allSlots => {
@@ -106,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
           alert("Selected slot not found. Maybe it was deleted?");
           return;
         }
-        // POST /api/requests with the chosen slot and form details
         fetch('/api/requests', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -119,13 +110,13 @@ document.addEventListener("DOMContentLoaded", () => {
             userEmail: emailVal
           })
         })
-        .then(res => res.json())
-        .then(data => {
-          alert("Request submitted!");
-          requestForm.reset();
-          loadRequests();
-        })
-        .catch(err => console.error("Error creating request:", err));
+          .then(res => res.json())
+          .then(data => {
+            alert("Request submitted!");
+            requestForm.reset();
+            loadRequests();
+          })
+          .catch(err => console.error("Error creating request:", err));
       })
       .catch(err => console.error("Error fetching timeslots:", err));
   });

@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 
-// Initialize Express
+// Initialize Express app
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -12,11 +12,11 @@ app.use(cors());
 // Serve static files from "public"
 app.use(express.static('public'));
 
-// Paths to JSON data (ensure these files exist in the 'data' folder)
+// Paths to JSON data files (ensure these are in a folder named "data" in your project root)
 const timeslotsPath = path.join(__dirname, 'data', 'timeslots.json');
 const requestsPath = path.join(__dirname, 'data', 'requests.json');
 
-// Helper: Read JSON from file (with debug logs)
+// Helper: Read JSON from file, with debug logs
 function readJSON(filePath) {
   try {
     const rawData = fs.readFileSync(filePath, 'utf8');
@@ -25,12 +25,12 @@ function readJSON(filePath) {
     console.log(`[DEBUG] Parsed data:`, parsed);
     return parsed;
   } catch (err) {
-    console.error(`Error reading or parsing ${filePath}:`, err);
+    console.error(`Error reading/parsing ${filePath}:`, err);
     return [];
   }
 }
 
-// Helper: Write JSON to file (with debug logs)
+// Helper: Write JSON to file, with debug logs
 function writeJSON(filePath, data) {
   try {
     const jsonData = JSON.stringify(data, null, 2);
@@ -44,7 +44,7 @@ function writeJSON(filePath, data) {
   }
 }
 
-// =========== TIME SLOTS ENDPOINTS =========== //
+// ----------------- TIME SLOTS ENDPOINTS -----------------
 
 // GET /api/timeslots?date=YYYY-MM-DD
 app.get('/api/timeslots', (req, res) => {
@@ -58,15 +58,12 @@ app.get('/api/timeslots', (req, res) => {
 });
 
 // POST /api/timeslots => Add a new time slot
-// Expects body: { date, startTime, endTime }
 app.post('/api/timeslots', (req, res) => {
   const { date, startTime, endTime } = req.body;
-  
   if (!date || !startTime || !endTime) {
-    console.error("Missing fields in request:", req.body);
+    console.error("Missing fields in time slot request:", req.body);
     return res.status(400).json({ error: 'Missing date, startTime, or endTime' });
   }
-  
   try {
     let slots = readJSON(timeslotsPath);
     const newSlot = {
@@ -75,7 +72,6 @@ app.post('/api/timeslots', (req, res) => {
       startTime,
       endTime
     };
-
     slots.push(newSlot);
     writeJSON(timeslotsPath, slots);
     console.log("New time slot added:", newSlot);
@@ -101,7 +97,7 @@ app.delete('/api/timeslots/:id', (req, res) => {
   }
 });
 
-// =========== REQUESTS ENDPOINTS =========== //
+// ----------------- REQUESTS ENDPOINTS -----------------
 
 // GET /api/requests => Return all requests
 app.get('/api/requests', (req, res) => {
@@ -109,16 +105,13 @@ app.get('/api/requests', (req, res) => {
   return res.json(requests);
 });
 
-// POST /api/requests => Create a new request
-// Expects body: { date, startTime, endTime, shiftType, userName, userEmail }
+// POST /api/requests => Create a new shift request
 app.post('/api/requests', (req, res) => {
   const { date, startTime, endTime, shiftType, userName, userEmail } = req.body;
-  
   if (!date || !startTime || !endTime || !shiftType || !userName || !userEmail) {
     console.error("Missing fields in request submission:", req.body);
     return res.status(400).json({ error: 'Missing required fields' });
   }
-  
   try {
     let requests = readJSON(requestsPath);
     const newReq = {
@@ -131,7 +124,6 @@ app.post('/api/requests', (req, res) => {
       userEmail,
       submittedAt: new Date().toISOString()
     };
-  
     requests.push(newReq);
     writeJSON(requestsPath, requests);
     console.log("New request submitted:", newReq);
@@ -157,12 +149,12 @@ app.delete('/api/requests/:id', (req, res) => {
   }
 });
 
-// 404 Fallback Route
+// 404 Fallback
 app.use((req, res) => {
   res.status(404).send('Not Found');
 });
 
-// Start the Server
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
